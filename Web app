@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# setup_website.sh
+# Description: Deploys a basic static web app on an Apache server inside a private EC2 instance
+
+# Move to Apache web root
+cd /var/www/html
+
+# ------------------------
+# Create index.html
+# ------------------------
+cat <<EOF > index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome - Kamran Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome to Kamran's Secure Web Server</h1>
+  <p>This web app is hosted on a private EC2 instance inside a secure VPC.</p>
+  <a href="about.html">About This Project</a>
+</body>
+</html>
+EOF
+
+# ------------------------
+# Create about.html
+# ------------------------
+cat <<EOF > about.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>About - Kamran Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>About This Project</h1>
+  <p>This AWS project demonstrates a secure VPC setup with public/private subnets, a NAT Gateway, and Bastion host.</p>
+  <a href="index.html">Back to Home</a>
+</body>
+</html>
+EOF
+
+# ------------------------
+# Create style.css
+# ------------------------
+cat <<EOF > style.css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  padding: 30px;
+  text-align: center;
+}
+a {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007BFF;
+}
+EOF
+
+# Restart Apache to reflect changes
+sudo systemctl restart httpd
